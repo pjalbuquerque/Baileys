@@ -38,7 +38,12 @@ export const getUrlInfo = async(
 	text: string,
 	opts: URLGenerationOptions = {
 		thumbnailWidth: THUMBNAIL_WIDTH_PX,
-		fetchOpts: { timeout: 3000 }
+		fetchOpts: { 
+			timeout: 3000, 
+			headers:  {
+				"User-Agent": "WhatsApp/2.23"
+			}  
+		}
 	},
 ): Promise<WAUrlInfo | undefined> => {
 	try {
@@ -72,8 +77,7 @@ export const getUrlInfo = async(
 				} else {
 					return false
 				}
-			},
-			headers: opts.fetchOpts as {}
+			}
 		})
 		if(info && 'title' in info && info.title) {
 			const [image] = info.images
