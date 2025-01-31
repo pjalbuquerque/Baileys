@@ -39,10 +39,7 @@ export const getUrlInfo = async(
 	opts: URLGenerationOptions = {
 		thumbnailWidth: THUMBNAIL_WIDTH_PX,
 		fetchOpts: { 
-			timeout: 3000, 
-			headers:  {
-				"User-Agent": "WhatsApp/2.23"
-			}  
+			timeout: 3000
 		}
 	},
 ): Promise<WAUrlInfo | undefined> => {
@@ -78,9 +75,9 @@ export const getUrlInfo = async(
 					return false
 				}
 			},
-			headers: opts.fetchOpts?.headers
-				? Object.fromEntries(Object.entries(opts.fetchOpts.headers).map(([key, value]) => [key, String(value)]))
-				: {}
+			headers: {
+				"User-Agent": "WhatsApp/2.23"
+			}
 		})
 		if(info && 'title' in info && info.title) {
 			const [image] = info.images
