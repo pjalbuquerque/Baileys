@@ -77,7 +77,8 @@ export const getUrlInfo = async(
 				} else {
 					return false
 				}
-			}
+			},
+			headers: opts.fetchOpts as {}
 		})
 		if(info && 'title' in info && info.title) {
 			const [image] = info.images
