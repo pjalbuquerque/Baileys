@@ -58,7 +58,7 @@ export const getUrlInfo = async(
 		}
 
 		const info = await getLinkPreview(previewLink, {
-			...opts.fetchOpts,
+			...(opts.fetchOpts || {}),
 			followRedirects: 'follow',
 			handleRedirects: (baseURL: string, forwardedURL: string) => {
 				const urlObj = new URL(baseURL)
@@ -78,7 +78,9 @@ export const getUrlInfo = async(
 					return false
 				}
 			},
-			headers: opts.fetchOpts.headers as {}
+			headers: opts.fetchOpts?.headers
+				? Object.fromEntries(Object.entries(opts.fetchOpts.headers).map(([key, value]) => [key, String(value)]))
+				: {}
 		})
 		if(info && 'title' in info && info.title) {
 			const [image] = info.images
